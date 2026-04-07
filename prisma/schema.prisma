@@ -1,0 +1,105 @@
+// Prisma schema for E-Commerce Suplementos
+// Modelos: User, Product, ProductVariant, Category, Order, OrderItem
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole @default(CLIENT)
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  products  Product[]
+}
+
+model Product {
+  id                String           @id @default(uuid())
+  name              String
+  brand             String
+  description       String
+  protein           Float
+  carbohydrates     Float
+  fats              Float
+  calories          Float
+  isGlutenFree      Boolean          @default(false)
+  isVegan           Boolean          @default(false)
+  nutritionTable    Json
+  categoryId        String
+  category          Category         @relation(fields: [categoryId], references: [id])
+  variants          ProductVariant[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model ProductVariant {
+  id             String   @id @default(uuid())
+  productId      String
+  product        Product  @relation(fields: [productId], references: [id])
+  flavor         String
+  size           String
+  price          Decimal  @db.Decimal(10,2)
+  discountPrice  Decimal? @db.Decimal(10,2)
+  discountEndsAt DateTime?
+  stock          Int
+  sku            String   @unique
+  batches        Batch[]
+  orderItems     OrderItem[]
+}
+
+model Batch {
+  id               String   @id @default(uuid())
+  productVariantId String
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  lotNumber        String
+  expirationDate   DateTime
+  stock            Int
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  userId     String
+  user       User        @relation(fields: [userId], references: [id])
+  items      OrderItem[]
+  status     OrderStatus @default(PENDING)
+  total      Decimal     @db.Decimal(10,2)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  paymentId  String?
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+  SHIPPED
+  DELIVERED
+}
+
+model OrderItem {
+  id               String         @id @default(uuid())
+  orderId          String
+  order            Order          @relation(fields: [orderId], references: [id])
+  productVariantId String
+  productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
+  quantity         Int
+  price            Decimal        @db.Decimal(10,2)
+}
