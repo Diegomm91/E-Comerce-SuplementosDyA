@@ -13,12 +13,15 @@
     "format": "turbo run format"
   },
   "devDependencies": {
-    "prisma": "^7.6.0",
+    "dotenv-cli": "^11.0.0",
+    "prisma": "^7.7.0",
     "turbo": "^1.13.0"
   },
   "dependencies": {
-    "@monorepo/shared": "^1.0.0",
+    "@prisma/adapter-pg": "^7.7.0",
     "@prisma/client": "^7.6.0",
+    "@prisma/config": "^7.7.0",
+    "pg": "^8.20.0",
     "zod": "^4.3.6"
   }
 }
