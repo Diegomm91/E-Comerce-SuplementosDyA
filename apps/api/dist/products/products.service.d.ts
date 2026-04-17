@@ -12,8 +12,8 @@ export declare class ProductsService {
             productId: string;
             flavor: string;
             size: string;
-            price: import("@prisma/client/runtime/client").Decimal;
-            discountPrice: import("@prisma/client/runtime/client").Decimal | null;
+            price: import("@prisma/client/runtime/library").Decimal;
+            discountPrice: import("@prisma/client/runtime/library").Decimal | null;
             discountEndsAt: Date | null;
             stock: number;
             sku: string;
@@ -29,7 +29,7 @@ export declare class ProductsService {
         calories: number;
         isGlutenFree: boolean;
         isVegan: boolean;
-        nutritionTable: import("@prisma/client/runtime/client").JsonValue;
+        nutritionTable: import("@prisma/client/runtime/library").JsonValue;
         categoryId: string;
         createdAt: Date;
         updatedAt: Date;
