@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prebuild": "prisma generate --schema=./prisma/schema.prisma",
-    "build": "nest build",
+    "build": "rm -rf dist && prisma generate && nest build",
     "start": "node dist/main",
     "start:dev": "nest start --watch",
     "dev": "nest start --watch"
