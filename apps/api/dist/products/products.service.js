@@ -17,7 +17,7 @@ let ProductsService = class ProductsService {
         this.prisma = prisma;
     }
     async findAll() {
-        return this.prisma.client.product.findMany({
+        return this.prisma.product.findMany({
             include: {
                 category: true,
                 variants: true,

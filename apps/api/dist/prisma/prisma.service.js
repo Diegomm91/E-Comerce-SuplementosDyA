@@ -9,21 +9,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PrismaService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
-let PrismaService = class PrismaService {
-    constructor() {
-        this.client = new client_1.PrismaClient({
-            datasources: {
-                db: {
-                    url: process.env.DATABASE_URL,
-                },
-            },
-        });
-    }
+let PrismaService = class PrismaService extends client_1.PrismaClient {
     async onModuleInit() {
-        await this.client.$connect();
+        await this.$connect();
     }
     async onModuleDestroy() {
-        await this.client.$disconnect();
+        await this.$disconnect();
     }
 };
 exports.PrismaService = PrismaService;
