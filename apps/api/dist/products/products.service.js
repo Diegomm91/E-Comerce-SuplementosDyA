@@ -18,10 +18,12 @@ let ProductsService = class ProductsService {
     }
     async findAll() {
         return this.prisma.product.findMany({
-            include: {
-                category: true,
-                variants: true,
-            },
+            orderBy: { createdAt: 'desc' },
+        });
+    }
+    async findOne(id) {
+        return this.prisma.product.findUnique({
+            where: { id },
         });
     }
 };

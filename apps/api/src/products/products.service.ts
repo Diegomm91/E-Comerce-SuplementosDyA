@@ -3,14 +3,18 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   async findAll() {
+    // CAMBIO: Se usa this.prisma directamente
     return this.prisma.product.findMany({
-      include: {
-        category: true,
-        variants: true,
-      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async findOne(id: string) {
+    return this.prisma.product.findUnique({
+      where: { id },
     });
   }
 }

@@ -2,23 +2,7 @@ import { ProductsService } from './products.service';
 export declare class ProductsController {
     private readonly productsService;
     constructor(productsService: ProductsService);
-    findAll(): Promise<({
-        category: {
-            id: string;
-            name: string;
-        };
-        variants: {
-            id: string;
-            productId: string;
-            flavor: string;
-            size: string;
-            price: import("@prisma/client/runtime/library").Decimal;
-            discountPrice: import("@prisma/client/runtime/library").Decimal | null;
-            discountEndsAt: Date | null;
-            stock: number;
-            sku: string;
-        }[];
-    } & {
+    findAll(): Promise<{
         id: string;
         name: string;
         brand: string;
@@ -33,5 +17,5 @@ export declare class ProductsController {
         categoryId: string;
         createdAt: Date;
         updatedAt: Date;
-    })[]>;
+    }[]>;
 }
